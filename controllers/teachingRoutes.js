@@ -4,6 +4,7 @@ const verifyToken = require("../middleware/verify-token.js");
 const router = express.Router();
 const Teaching = require("../models/TeachingApplication.js");
 const Class = require("../models/Class.js")
+const ParentReservation = require("../models/Reservations.js")
 
 
 
@@ -202,5 +203,22 @@ router.post("/:teachId/class", verifyToken, async (req, res) => {
           res.status(500).json({ err: err.message });
         }
       });
+
+
+      /// Reservations Routes
+
+    router.post("/", verifyToken, async (req, res) => {
+    try {
+      console.log(req.body)
+      // req.body.volunteer = req.user._id
+      const reservationData = await ParentReservation.create(req.body)
+      reservationData._doc.parent = req.user
+      res.status(201).json(reservationData)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({ err: err.message })
+    }
+  })
+
     
 module.exports = router;

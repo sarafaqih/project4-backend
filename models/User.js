@@ -1,4 +1,6 @@
 const {Schema, model} = require("mongoose")
+const mongoose = require("mongoose");
+
 
 const userSchema = new Schema({
     username: {
@@ -38,6 +40,10 @@ const userSchema = new Schema({
       }, 
       experience:{
         type: String
+      },
+       reservations:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Reservations"
       }
   
 
